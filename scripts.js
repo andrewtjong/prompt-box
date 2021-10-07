@@ -8,8 +8,15 @@ function ask(options) {
     <label>${options.title}</label>
     </fieldset>
     `);
-    console.log(popup);
+    
     // Second, check if they want a cancel button
+    if(options.cancel) {
+      const skiButton = document.createElement('button');
+      skiButton.type = 'button';
+      skiButton.textContent = 'Cancel';
+      // TODO: listen for a click on that cancel button
+    }
+
     // Third, listen for the submit event on the inouts
     // Fourth, when someone does submit it resolve the data that was in the input box
   })
