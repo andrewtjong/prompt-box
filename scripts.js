@@ -1,6 +1,14 @@
 function wait(ms = 0) {
   return new Promise(resolve => setTimeout(resolve, ms))
-}
+};
+
+async function destroyPopup(popup) {
+  popup.classList.remove('open');
+  await wait(1000);
+  // remove the popup entirely!
+  popup.remove();
+  popup = null;
+;}
 
 function ask(options) {
   return new Promise(async function(resolve) {
@@ -24,6 +32,14 @@ function ask(options) {
       popup.firstElementChild.appendChild(skipButton);
       // TODO: listen for a click on that cancel button
     };
+
+    // Listen for the submit event on the inputs
+    popup.addEventListener('submit', function(e) {
+      e.preventDefault();
+      resolve(e.target.input.value)
+      // remove it from the DOM entirely
+      destroyPopup(popup)
+    }, {once: true})
 
     // Third, listen for the submit event on the inouts
     // Fourth, when someone does submit it resolve the data that was in the input box
