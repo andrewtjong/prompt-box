@@ -33,6 +33,10 @@ function ask(options) {
       skipButton.textContent = 'Cancel';
       popup.firstElementChild.appendChild(skipButton);
       // TODO: listen for a click on that cancel button
+      skipButton.addEventListener('click', function() {
+        resolve(null);
+        destroyPopup(popup)
+      }, { once:true });
     };
 
     // Listen for the submit event on the inputs
@@ -63,7 +67,7 @@ async function askQuestion(e) {
     title: button.dataset.question, 
     cancel,
   });
-  console.log(answer)
+
 };
 const buttons = document.querySelectorAll('[data-question');
 buttons.forEach(button => button.addEventListener('click', askQuestion));
