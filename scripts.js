@@ -7,7 +7,9 @@ async function destroyPopup(popup) {
   await wait(1000);
   // remove the popup entirely!
   popup.remove();
+  /* eslint-disable no-param-reassign */
   popup = null;
+  /* eslint-disable no-param-reassign */
 ;}
 
 function ask(options) {
@@ -51,3 +53,17 @@ function ask(options) {
     popup.classList.add('open');
   });
 }
+
+//  select all buttons that have a data-question
+async function askQuestion(e) {
+  const button = e.currentTarget;
+  const cancel = 'cancel' in button.dataset;
+
+  const answer = await ask({ 
+    title: button.dataset.question, 
+    cancel,
+  });
+  console.log(answer)
+};
+const buttons = document.querySelectorAll('[data-question');
+buttons.forEach(button => button.addEventListener('click', askQuestion));
